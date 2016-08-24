@@ -22,32 +22,13 @@ public class CustomerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);
 
     public List<Customer> getCustomerList(){
-        // TODO: 2016/8/24
-        Connection conn = null;
+        Connection conn = DatabaseHelper.getConnnection();
         try {
-            List<Customer> customerList = new ArrayList<>();
             String sql = "SELECT * FROM customer";
-            conn = DatabaseHelper.getConnnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()){
-                Customer customer = new Customer();
-                customer.setTelephone(rs.getString("telephone"));
-                customer.setName(rs.getString("name"));
-                customer.setId(rs.getLong("id"));
-                customer.setEmail(rs.getString("email"));
-                customer.setRemark(rs.getString("remark"));
-                customerList.add(customer);
-            }
-            return customerList;
-        }catch (SQLException e){
-            LOGGER.error("close connection failure",e);
+            return DatabaseHelper.queryEntityList(Customer.class,conn,sql);
         }finally {
             DatabaseHelper.closeConnection(conn);
         }
-        return  null;
     }
     
     public Customer getCustomer(long id){

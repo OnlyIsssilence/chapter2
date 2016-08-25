@@ -21,33 +21,45 @@ import java.util.Map;
 public class CustomerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);
 
-    public List<Customer> getCustomerList(){
-        Connection conn = DatabaseHelper.getConnnection();
-        try {
-            String sql = "SELECT * FROM customer";
-            return DatabaseHelper.queryEntityList(Customer.class,conn,sql);
-        }finally {
-            DatabaseHelper.closeConnection(conn);
-        }
+    public List<Customer> getCustomerList() {
+        String sql = "SELECT * FROM customer";
+        return DatabaseHelper.queryEntityList(Customer.class, sql);
     }
-    
-    public Customer getCustomer(long id){
+
+    public Customer getCustomer(long id) {
         // TODO: 2016/8/24  
         return null;
     }
-    
-    public boolean createCustomer(Map<String,Object> fieldMap){
-        // TODO: 2016/8/24  
-        return false;
+
+    /**
+     * 创建
+     *
+     * @param fieldMap
+     * @return
+     */
+    public boolean createCustomer(Map<String, Object> fieldMap) {
+        return DatabaseHelper.insertEntity(Customer.class, fieldMap);
     }
-    
-    public boolean updateCustomer(long id,Map<String,Object> fieldMap){
-        // TODO: 2016/8/24  
-        return false;
+
+    /**
+     * 更新
+     *
+     * @param id
+     * @param fieldMap
+     * @return
+     */
+    public boolean updateCustomer(long id, Map<String, Object> fieldMap) {
+
+        return DatabaseHelper.updateEntity(Customer.class, id, fieldMap);
     }
-    
-    public boolean deleteCustomer(long id){
-        // TODO: 2016/8/24
-        return false;
+
+    /**
+     * 删除
+     *
+     * @param id
+     * @return
+     */
+    public boolean deleteCustomer(long id) {
+        return DatabaseHelper.deleteEntity(Customer.class, id);
     }
 }

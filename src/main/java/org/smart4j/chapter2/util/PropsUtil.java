@@ -28,6 +28,7 @@ public final class PropsUtil {
                 throw new FileNotFoundException(fileName + "file is not found");
             }
             props = new Properties();
+            props.load(is);
 
         } catch (IOException e) {
             e.printStackTrace();

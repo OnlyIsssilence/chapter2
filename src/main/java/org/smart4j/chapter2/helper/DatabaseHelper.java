@@ -238,6 +238,53 @@ public class DatabaseHelper {
         return executeUpdate(sql, id) == 1;
     }
 
+    public static void beginTransaction(){
+        Connection conn = getConnnection();
+
+        if (conn != null){
+            try{
+                conn.setAutoCommit(false);
+            }catch (SQLException e){
+                LOGGER.error("begin transaciton failure",e);
+                throw new RuntimeException(e);
+            }finally {
+                CONNECTION_HOLDER.set(conn);
+            }
+        }
+    }
+
+    public static void commitTransaction(){
+        Connection conn = getConnnection();
+        if (conn != null){
+            try{
+                conn.commit();
+                conn.close();
+            }catch (SQLException e){
+                LOGGER.error("commit transaciton failure",e);
+                throw new RuntimeException(e);
+            }finally {
+                CONNECTION_HOLDER.remove();
+            }
+        }
+    }
+
+    public static void rollbackTransaction(){
+        Connection conn = getConnnection();
+        if (conn != null){
+            try{
+                conn.rollback();
+                conn.close();
+            }catch (SQLException e){
+                LOGGER.error("rollback transaciton failure",e);
+                throw new RuntimeException(e);
+            }finally {
+                CONNECTION_HOLDER.remove();
+            }
+        }
+    }
+
+
+
 
 
 

@@ -2,6 +2,7 @@ package org.smart4j.chapter2.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.smart4j.chapter2.annotation.Transaction;
 import org.smart4j.chapter2.helper.DatabaseHelper;
 import org.smart4j.chapter2.model.Customer;
 
@@ -21,11 +22,13 @@ import java.util.Map;
 public class CustomerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);
 
+    @Transaction
     public List<Customer> getCustomerList() {
         String sql = "SELECT * FROM customer";
         return DatabaseHelper.queryEntityList(Customer.class, sql);
     }
 
+    @Transaction
     public Customer getCustomer(long id) {
         // TODO: 2016/8/24  
         return null;
@@ -37,6 +40,7 @@ public class CustomerService {
      * @param fieldMap
      * @return
      */
+    @Transaction
     public boolean createCustomer(Map<String, Object> fieldMap) {
         return DatabaseHelper.insertEntity(Customer.class, fieldMap);
     }
@@ -48,6 +52,7 @@ public class CustomerService {
      * @param fieldMap
      * @return
      */
+    @Transaction
     public boolean updateCustomer(long id, Map<String, Object> fieldMap) {
 
         return DatabaseHelper.updateEntity(Customer.class, id, fieldMap);
@@ -59,6 +64,7 @@ public class CustomerService {
      * @param id
      * @return
      */
+    @Transaction
     public boolean deleteCustomer(long id) {
         return DatabaseHelper.deleteEntity(Customer.class, id);
     }

@@ -1,4 +1,4 @@
-customer_create.jsp<%--
+<%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2016/8/23
@@ -8,13 +8,13 @@ customer_create.jsp<%--
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>客户管理 - 创建编辑</title>
+    <title>添加修改成功</title>
 </head>
 
 <body>
 
 
-<h1>创建客户界面</h1>
+<h1>添加修改成功!</h1>
 
 
 

@@ -1,5 +1,6 @@
 package org.smart4j.chapter2.controller;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,14 +10,23 @@ import java.io.IOException;
 
 /**
  * Author:zhangmingqiang.
- * Date  :2016/8/24.
- * Description:控制层，暴露给外界使用
+ * Date  :2016/9/13.
+ * Description:
  */
-@WebServlet("/customer_create")
-public class CustomerCreateServlet extends HttpServlet {
+@WebServlet("/pointoperate")
+public class PointOperateServlet  extends HttpServlet {
+
+    @Override
+    public void init()throws ServletException {
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+        RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/view/pointoperate.jsp");
+        try {
+            rd.forward(req, resp);
+            return;
+        }catch(Exception e){}
     }
 
     @Override

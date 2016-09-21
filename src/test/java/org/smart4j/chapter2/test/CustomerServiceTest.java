@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class CustomerServiceTest {
 
-    private final CustomerService customerService;
+    /*private final CustomerService customerService;
     public CustomerServiceTest(){
         customerService = new CustomerService();
     }
@@ -67,7 +67,7 @@ public class CustomerServiceTest {
         long id = 1;
         boolean result = customerService.deleteCustomer(id);
         Assert.assertTrue(result);
-    }
+    }*/
 }
 
 

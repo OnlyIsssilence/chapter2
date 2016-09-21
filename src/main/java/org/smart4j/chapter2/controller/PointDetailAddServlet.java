@@ -1,8 +1,5 @@
 package org.smart4j.chapter2.controller;
 
-import org.smart4j.chapter2.model.Customer;
-import org.smart4j.chapter2.service.CustomerService;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,31 +7,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Author:zhangmingqiang.
  * Date  :2016/8/24.
  * Description:
  */
-@WebServlet("/customer")
-public class CustomerServlet extends HttpServlet {
 
-    private CustomerService customerService;
+@WebServlet("/pointdetailadd")
+public class PointDetailAddServlet extends HttpServlet{
 
     @Override
     public void init()throws ServletException{
-        customerService = new CustomerService();
     }
-
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        List<Customer> customerList = customerService.getCustomerList();
-        req.setAttribute("customerList",customerList);
-
-        RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/view/customer.jsp");
+        RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/view/adddetail.jsp");
         try {
             rd.forward(req, resp);
             return;
@@ -45,38 +34,4 @@ public class CustomerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doPost(req, resp);
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

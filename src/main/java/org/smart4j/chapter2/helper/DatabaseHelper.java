@@ -45,7 +45,6 @@ public class DatabaseHelper {
         } catch (ClassNotFoundException e) {
             LOGGER.error("can not load jdbc driver", e);
         }
-
     }
 
     public static Connection getConnnection() {
@@ -76,7 +75,7 @@ public class DatabaseHelper {
 
     /**
      * 单表查询 BeanListHandler
-     *
+     * 查询list
      * @param entityClass
      * @param sql
      * @param params
@@ -98,14 +97,22 @@ public class DatabaseHelper {
         return entityList;
     }
 
-    public static <T> T queryList(Class<T> entityClass, String sql, Object... params) {
+    /**
+     * 查询单个
+     * @param entityClass
+     * @param sql
+     * @param params
+     * @param <T>
+     * @return
+     */
+    public static <T> T queryEntity(Class<T> entityClass, String sql, Object... params) {
         T entity;
         try {
             Connection conn = getConnnection();
             entity = QUERY_RUNNER.query(conn, sql, new BeanHandler<T>(entityClass), params);
 
         } catch (SQLException e) {
-            LOGGER.error("query entity list failure", e);
+            LOGGER.error("query entity failure", e);
             throw new RuntimeException(e);
         } finally {
             closeConnection();
@@ -115,7 +122,6 @@ public class DatabaseHelper {
 
     /**
      * 多表查询 MapListHandler
-     *
      * @param sql
      * @param params
      * @return
@@ -137,7 +143,6 @@ public class DatabaseHelper {
 
     /**
      * 更新操作update
-     *
      * @param sql
      * @param params
      * @return rows为更新之后影响的条数
@@ -176,7 +181,7 @@ public class DatabaseHelper {
         }
 
         //拼接SQL语句
-        String sql = "INSERT INTO" + getTableName(entityClass);
+        String sql = "INSERT INTO t_pointdetail_new";
         StringBuilder columns = new StringBuilder("(");
         StringBuilder values = new StringBuilder("(");
         for (String fieldName : fieldMap.keySet()) {
@@ -186,7 +191,7 @@ public class DatabaseHelper {
         }
 
         columns.replace(columns.lastIndexOf(","), columns.length(), ")");
-        values.replace(values.lastIndexOf(","), values.length(), ",");
+        values.replace(values.lastIndexOf(","), values.length(), ")");
         sql += columns + "VALUES " + values;
 
         Object[] params = fieldMap.values().toArray();
@@ -234,60 +239,9 @@ public class DatabaseHelper {
      */
     public static <T> boolean deleteEntity(Class<T> entityClass,long id) {
         //拼接SQL语句
-        String sql = "DELETE FROM " + getTableName(entityClass) + " WHERE id=?";
+        String sql = "DELETE FROM t_pointdetail_new WHERE id=?";
         return executeUpdate(sql, id) == 1;
     }
-
-    public static void beginTransaction(){
-        Connection conn = getConnnection();
-
-        if (conn != null){
-            try{
-                conn.setAutoCommit(false);
-            }catch (SQLException e){
-                LOGGER.error("begin transaciton failure",e);
-                throw new RuntimeException(e);
-            }finally {
-                CONNECTION_HOLDER.set(conn);
-            }
-        }
-    }
-
-    public static void commitTransaction(){
-        Connection conn = getConnnection();
-        if (conn != null){
-            try{
-                conn.commit();
-                conn.close();
-            }catch (SQLException e){
-                LOGGER.error("commit transaciton failure",e);
-                throw new RuntimeException(e);
-            }finally {
-                CONNECTION_HOLDER.remove();
-            }
-        }
-    }
-
-    public static void rollbackTransaction(){
-        Connection conn = getConnnection();
-        if (conn != null){
-            try{
-                conn.rollback();
-                conn.close();
-            }catch (SQLException e){
-                LOGGER.error("rollback transaciton failure",e);
-                throw new RuntimeException(e);
-            }finally {
-                CONNECTION_HOLDER.remove();
-            }
-        }
-    }
-
-
-
-
-
-
 }
 
 

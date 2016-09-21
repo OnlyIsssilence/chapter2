@@ -8,13 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>客户管理 - 客户信息展示</title>
+    <title>添加修改成功</title>
 </head>
 
 <body>
 
 
-<h1>创建客户界面</h1>
+<h1>数据填写完整!</h1>
 
 
 
